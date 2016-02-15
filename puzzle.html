@@ -1,0 +1,55 @@
+<html>
+<head>
+<script>
+//creating bucket list HA HA
+var bucket = [];
+for(i = 1; i < 10; i++){
+bucket.push(i);
+}
+
+function makeNewBucket(){
+bucket = [];
+for(i = 1; i < 10; i++){
+bucket.push(i);
+}
+}
+
+var s = [];
+var count = 1;
+
+//a + 13(b/c) + d +(12*e) - f + (g*h)/i = 87
+
+function findSol(){
+while(s[0] + 13*(s[1]/s[2]) + s[3] +(12*s[4]) - s[5] + (s[6]*s[7])/s[8] != 87){
+	makeNewBucket();
+	for(i = 0; i < 9; i++){
+		var pull = Math.floor((Math.random() * bucket.length));
+		s[i] = bucket[pull];
+		bucket.splice(pull,1);
+	}
+	var node = document.createElement("LI");
+	var textnode = document.createTextNode(count + " : " + s[0] + " " + s[1] + " " + s[2] + " " + s[3] + " " + s[4] + " " + s[5] + " " + s[6] + " " + s[7] + " " + s[8]);
+	node.appendChild(textnode);
+	document.getElementById("result").appendChild(node);
+	count++;
+}
+
+document.getElementById("message").innerHTML = "<p style='color: red;'>Solution found! \{" + s[0] + " " + s[1] + " " + s[2] + " " + s[3] + " " + s[4] + " " + s[5] + " " + s[6] + " " + s[7] + " " + s[8] + "\}</p>";
+}
+
+</script>
+</head>
+
+
+
+
+
+<body>
+<center><img src = "pzl.jpg" /></center>
+<center><ul style="list-style:none;" id = "result"></ul></center>
+<center><div id = "message"></div></center>
+<br>
+<center><button type="btn" onclick="findSol()">Run</button></center>
+</body>
+
+</html>

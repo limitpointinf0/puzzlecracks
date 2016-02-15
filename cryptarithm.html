@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>cryptarithm</title>
+
+<!--Looking a set of numbers that satisfy
+  aaa  (num1)
+ x aa  (num2)
+------  
+ aaaa  (num3) 
+aaaa   (num4) 
+------
+aaaaa  (num5)   
+
+where the a is a prime 2,3,5, or 7 
+-->
+
+<script>
+var bucket=[2,3,5,7];
+
+//Test if digits are numbers on the bucketlist
+function primeTest(n){
+var boo = false;
+	switch(n){
+		case bucket[0]:
+			boo = true;
+			break;
+		case bucket[1]:
+			boo = true;
+			break;
+		case bucket[2]:
+			boo = true;
+			break;
+		case bucket[3]:
+			boo = true;
+			break;
+		default:
+			boo = false;
+	}
+return boo;
+}
+
+
+function findSol(){
+
+var num1 = [];
+var num2 = [];
+//generating num1 and num2
+	for(i = 0; i < 3; i++){
+	var ind = Math.floor(Math.random() * bucket.length);
+	var rand1 = bucket[ind];
+	num1.push(rand1);
+	}
+	for(i = 0; i < 2; i++){
+	var ind = Math.floor(Math.random() * bucket.length);
+	var rand2 = bucket[ind];
+	num2.push(rand2);
+	}
+
+	
+//array to string
+var int1 = num1.join();
+var int2 = num2.join();
+//remove commas
+int1 = int1.replace(/,/g,"");
+int2 = int2.replace(/,/g,""); 
+//parse into int
+int1 = parseInt(int1);
+int2 = parseInt(int2);
+
+
+//multiplying to obtain num3 and num4
+var num3 = int1 * num2[1];
+var num4 = int1 * num2[0];
+//convert num3 and num4 to string arrays
+num3 = num3.toString();
+num4 = num4.toString();
+num3 = num3.split("");
+num4 = num4.split("");
+//convert each element in array to integer to be tested
+for(i=0; i < num3.length; i++){
+	num3[i] = parseInt(num3[i]);
+}
+for(i=0; i < num4.length; i++){
+	num4[i] = parseInt(num4[i]);
+}
+
+//testing digits of results
+var y=0;
+var n=0;
+	for(i=0; i < num3.length; i++){
+	primeTest(num3[i]) ? y++ : n = 1;
+	}
+	
+	for(i=0; i < num4.length; i++){
+	primeTest(num4[i]) ? y++ : n = 1;
+	}
+
+//if there was a digit that wasnt in the bucket list then run finSol again, otherwise test num5	
+				if(n==1){
+					Main();
+					}else { 
+					//multiply int1 and int 2 to obtain num5, then make it into an integer array
+					var num5 = int1 * int2;
+					alert(num5);
+					num5 = num5.toString();
+					num5 = num5.split("");
+					for(i=0; i < num5.length; i++){
+					num5[i] = parseInt(num5[i]);
+					}
+					//run the test again
+					for(i=0; i < num5.length; i++){
+					primeTest(num5[i]) ? y++ : n = 1;
+					}
+					
+					(n==1) ? Main() : document.getElementById("result").innerHTML = "Solution found: " + int1 + " and " + int2;
+					}
+}
+
+function Main(){
+findSol();
+}
+</script>
+</head>
+
+<body>
+<center><div ="problem">
+<h1>A Prime Cryptarithm</h1>
+<p>In this remarkable cryptarithm, each digit is a prime (2,3,5, or 7). 
+No letters or digits are provided as clues, but there is only one solution.</p>
+<br>
+<pre style="font-size: 20px;">
+   ***
+x   **
+------
+  ****
+****
+------
+ *****
+</pre> 
+</div></center>
+<center><div id="result" style="font-size: 20px; color: red;"></div></center>
+<br>
+<center><button type="btn" onclick="Main()">Show</button></center>
+</body>
+
+</html>

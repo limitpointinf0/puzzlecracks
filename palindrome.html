@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script>
+function Main(){
+var choice = chooseNum();
+var revnum = 0;
+var total = 0;
+var isnum = checkInp(choice);
+var stop = false;
+var counter = 0;
+
+if(isnum){
+	choice = makeInt(choice);
+
+	while(!stop){
+	counter++;
+	revnum = makeRev(choice);
+	revnum = makeInt(revnum);
+	total = choice + revnum;
+		if(itsPali(total)){
+			document.getElementById('message').innerHTML = "Palindrome <font style='color:red;'>" + total + "</font> found after <font style='color:red;'>" + counter + "</font> iterations.";
+			addPara(total);
+			stop = true;
+		}else{
+			addPara(total);
+			choice = total;
+			stop = false;
+		}
+	}
+	
+	
+	}else {
+	alert("Input must be a nonzero positive integer. Float types will be parsed into integers.");
+	}
+}
+
+//choose a number
+function chooseNum(){
+	var inputbox = document.getElementById("choose").value;
+	return inputbox;
+}
+
+//check if input is a number
+function checkInp(n){
+	var iswhat = n;
+	if(isNaN(iswhat) || iswhat == 0){
+		return false;
+	}else {
+		return true;
+	}
+}
+
+
+//make input string an integer
+function makeInt(str){
+	var toint = str;
+	toint = parseInt(toint);
+	return toint;
+}
+
+//add it's reverse
+function makeRev(num){
+	var rev = num.toString();
+	rev = rev.split("");
+	rev = rev.reverse();
+	rev = rev.join("");
+	return rev;
+}
+
+//check if palindrome
+function itsPali(num){
+	var fortest = num;
+	var revtest = fortest.toString()
+	revtest = revtest.split("");
+	revtest = revtest.reverse();
+	revtest = revtest.join("");
+	revtest = makeInt(revtest);
+	
+	if(fortest == revtest){
+	return true;
+	}else{
+	return false;
+	}
+}
+
+//append work
+function addPara(inp){
+	var texting = inp.toString();
+	var para = document.createElement('p');
+	var node = document.createTextNode(texting);
+	para.appendChild(node);
+	
+	var element = document.getElementById("work");
+	element.appendChild(para);
+}
+
+</script>
+
+</head>
+
+<body>
+Input a nonzero integer: <input type='text' id='choose' />
+<div id="message">Waiting for input...</div>
+<br>
+<button type='btn' onclick='Main()'>Run</button>
+<div id="work">
+<h4>Work performed</h4>
+<hr>
+<!--iterations-->
+</div>
+</body>
+</html>
